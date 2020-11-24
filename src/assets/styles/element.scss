@@ -1,0 +1,28 @@
+.el-menu {
+    height: 50px;
+    border-bottom: none!important;
+    .el-menu-item,
+    .el-submenu,
+    .el-submenu__title {
+        height: 50px;
+        padding: 0 15px;
+        line-height: 50px;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-size: 14px;
+        line-height: 50px;
+        color: #555;
+        .el-submenu__icon-arrow {
+            display: none;
+        }
+    }
+    .el-submenu__title {
+        padding: 0!important;
+    }
+}
+
+.el-input,
+.el-input__inner {
+    height: 36px;
+    line-height: 36px;
+}
