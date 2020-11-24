@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-11-18 18:07:41
- * @LastEditTime: 2020-11-24 17:36:03
+ * @LastEditTime: 2020-11-24 18:55:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\components\HelloWorld.vue
@@ -17,6 +17,7 @@
         </div>
         <div class="container-box-right"></div>
       </div>
+      <PageFooter></PageFooter>
     </div>
   </div>
 </template>
@@ -24,14 +25,16 @@
 import Vue from 'vue';
 import Component from 'vue-class-component';
 import PageHeader from '../../components/Header/Index.vue';
-import NewArticle from './components/newArticle/index.vue'
+import NewArticle from './components/newArticle/index.vue';
 import PageBanner from '../../components/Banner/Index.vue';
+import PageFooter from '../../components/Footer/Index.vue';
 
 @Component({
   components: {
     PageHeader,
     PageBanner,
-    NewArticle
+    PageFooter,
+    NewArticle,
   },
 })
 export default class Home extends Vue {}
@@ -42,9 +45,9 @@ export default class Home extends Vue {}
   margin-left: auto;
   padding-left: 15px;
   padding-right: 15px;
-  background-color: #fff;;
-  .container-box-left{
-    width:75%;
+  background-color: #fff;
+  .container-box-left {
+    width: 75%;
   }
 }
 

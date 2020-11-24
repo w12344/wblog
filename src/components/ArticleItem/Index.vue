@@ -1,84 +1,14 @@
 <!--
  * @Author: your name
  * @Date: 2020-11-24 17:46:44
- * @LastEditTime: 2020-11-24 18:25:32
+ * @LastEditTime: 2020-11-24 18:48:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\components\Article\Index.vue
 -->
 <template>
   <div class="site-container row">
-    <article class="post-list contt blockimg" id="post_10">
-      <div class="entry-container">
-        <div class="block-image feaimg">
-          <a
-            id="post_a_10"
-            class="block-fea scrollLoading"
-            data-url="https://qicao.cn/images/5.jpg"
-            href="https://qicao.cn/mingyan/10.html"
-            title="本博发帖已启用先审后发机制,请勿灌水,谢谢合作"
-            style="background-image: url(../../assets/home/arcites.jpg)"
-          >
-            <!-- <span class="vodlist_top"><em class="voddate voddate_year">名言</em></span> -->
-          </a>
-          <div class="entyr-icon"><i class="icon iconfont icon-tupian"></i></div>
-        </div>
-        <header class="entry-header">
-          <span class="entry-title"
-            ><a href="https://qicao.cn/mingyan/10.html"><span class="badge arc_v6">置顶</span>本博发帖已启用先审后发机制,请勿灌水,谢谢合作</a></span
-          >
-        </header>
-        <div class="entry-summary ss"><p>为配合上级有关部门要求，净化网络风气，打造绿色健康网络平台，本博发帖采用先审后发机制，支持原创，支持积极正能量，请大家严格遵守本博规定！</p></div>
-        <div class="entry-meta">
-          <a href="https://qicao.cn/author/1"
-            ><img
-              src="https://cdn.v2ex.com/gravatar/0261a00f2487afdf3009e297667cde0d?s=96&amp;d=mp&amp;r=g"
-              srcset="https://cdn.v2ex.com/gravatar/0261a00f2487afdf3009e297667cde0d?s=96&amp;d=mp&amp;r=g"
-              class="avatar avatar-140 photo"
-              height="25"
-              width="25"
-            />admin</a
-          ><span class="separator">/</span><a href="https://qicao.cn/category/mingyan/">名言</a><span class="separator">/</span><time datetime="2020-10-02">52天前</time>
-          <span class="separator">/</span> 281 阅读
-        </div>
-      </div>
-    </article>
-        <article class="post-list contt blockimg" id="post_10">
-      <div class="entry-container">
-        <div class="block-image feaimg">
-          <a
-            id="post_a_10"
-            class="block-fea scrollLoading"
-            data-url="https://qicao.cn/images/5.jpg"
-            href="https://qicao.cn/mingyan/10.html"
-            title="本博发帖已启用先审后发机制,请勿灌水,谢谢合作"
-            style="background-image: url(../../assets/home/arcites.jpg)"
-          >
-            <!-- <span class="vodlist_top"><em class="voddate voddate_year">名言</em></span> -->
-          </a>
-          <div class="entyr-icon"><i class="icon iconfont icon-tupian"></i></div>
-        </div>
-        <header class="entry-header">
-          <span class="entry-title"
-            ><a href="https://qicao.cn/mingyan/10.html"><span class="badge arc_v6">置顶</span>本博发帖已启用先审后发机制,请勿灌水,谢谢合作</a></span
-          >
-        </header>
-        <div class="entry-summary ss"><p>为配合上级有关部门要求，净化网络风气，打造绿色健康网络平台，本博发帖采用先审后发机制，支持原创，支持积极正能量，请大家严格遵守本博规定！</p></div>
-        <div class="entry-meta">
-          <a href="https://qicao.cn/author/1"
-            ><img
-              src="https://cdn.v2ex.com/gravatar/0261a00f2487afdf3009e297667cde0d?s=96&amp;d=mp&amp;r=g"
-              srcset="https://cdn.v2ex.com/gravatar/0261a00f2487afdf3009e297667cde0d?s=96&amp;d=mp&amp;r=g"
-              class="avatar avatar-140 photo"
-              height="25"
-              width="25"
-            />admin</a
-          ><span class="separator">/</span><a href="https://qicao.cn/category/mingyan/">名言</a><span class="separator">/</span><time datetime="2020-10-02">52天前</time>
-          <span class="separator">/</span> 281 阅读
-        </div>
-      </div>
-    </article>
-        <article class="post-list contt blockimg" id="post_10">
+    <article class="post-list contt blockimg" id="post_10" v-for="item in 10" :key="item">
       <div class="entry-container">
         <div class="block-image feaimg">
           <a
@@ -149,7 +79,7 @@ export default {
       .block-image {
         width: 210px;
         height: 140px;
-        position: absolute!important;
+        position: absolute !important;
         padding-top: 0;
         margin-right: 20px;
         left: 0;
@@ -180,6 +110,7 @@ export default {
         background-position: right top;
         background-repeat: no-repeat;
         background-size: auto 40%;
+        text-align: left;
         .entry-title {
           margin: 0;
           font-size: 18px;
@@ -189,9 +120,9 @@ export default {
           .badge {
             border-radius: 2px;
             font-weight: 400;
-            padding: 0.2em 0.35em;
+            padding: 2px 3.5px;
             font-size: 12px;
-            margin: 0 0.4rem 0 0;
+            margin: 0 4px 0 0;
             position: relative;
             top: -1px;
           }
@@ -204,8 +135,40 @@ export default {
           }
         }
       }
+      .entry-summary {
+        text-align: left;
+        text-indent: 25px;
+        p {
+          padding: 0 0 15px;
+          display: -webkit-box;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 2;
+          text-overflow: ellipsis;
+          overflow: hidden;
+          font-size: 13px;
+          color: #999;
+          line-height: 23px;
+          margin: 7px 0;
+        }
+      }
       .entry-meta {
+        text-align: left;
         margin-bottom: 0px !important;
+        font-size: 11px;
+        color: #939393;
+        letter-spacing: 2px;
+        line-height: 1;
+        a{
+          color:#939393;
+        }
+        .avatar {
+          margin-right: 5px;
+          margin-top: -5px;
+        }
+        .separator {
+          color: #e1e1e1;
+          padding: 0 5px;
+        }
       }
     }
   }
