@@ -1,7 +1,7 @@
 <!--
  * @Author: wuzhiqiang
  * @Date: 2020-11-19 14:56:29
- * @LastEditTime: 2020-11-24 17:25:14
+ * @LastEditTime: 2020-11-25 18:14:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\components\Header\Index.vue
@@ -58,13 +58,11 @@ export default {
 </script>
 <style scoped lang="scss">
 .banner-box {
-  padding-top: 147px;
   .contpost {
     box-sizing: border-box;
     background-color: #fff !important;
     box-shadow: 0px 0px 20px -5px rgba(158, 158, 158, 0.22);
     border-radius: 8px;
-    padding: 20px 20px 15px 20px;
     .grid-content {
       display: flex;
       width: 100%;

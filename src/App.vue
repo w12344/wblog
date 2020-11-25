@@ -1,21 +1,21 @@
 <!--
  * @Author: your name
  * @Date: 2020-11-18 18:07:41
- * @LastEditTime: 2020-11-19 17:56:31
+ * @LastEditTime: 2020-11-25 15:18:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\App.vue
 -->
 <template>
   <div id="app">
-    <router-view/>
+    <router-view />
   </div>
 </template>
 
 <script>
 export default {
-  name: 'App'
-}
+  name: 'App',
+};
 </script>
 
 <style>
@@ -26,4 +26,5 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
 </style>

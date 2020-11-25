@@ -1,13 +1,16 @@
 <!--
  * @Author: your name
  * @Date: 2020-11-24 18:51:04
- * @LastEditTime: 2020-11-24 18:56:22
+ * @LastEditTime: 2020-11-25 15:21:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\components\Footer\Index.vue
 -->
 <template>
   <footer class="site-footer">
+    <el-backtop>
+      <a href="#" id="scroll-to-top" class=""><i class="el-icon-arrow-up"></i></a>
+    </el-backtop>
     <div class="site-info clearfix">
       <div class="container">
         <div class="footer-left">
@@ -90,5 +93,88 @@ export default {
   position: relative;
   z-index: 39;
   background-color: #fff;
+  .container {
+    display: flex;
+    margin:0 auto;
+    justify-content: space-between;
+    .footer-left {
+      text-align: left;
+      max-width: 857px;
+      a {
+        color: #555;
+        line-height: 20px;
+      }
+      .footer-l-top {
+        padding: 24px 0;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #eee;
+        a {
+          display: inline-block;
+          color: #333;
+          margin-right: 20px;
+          font-size: 14px;
+          padding: 0;
+          line-height: 30px;
+        }
+      }
+      .footer-l-btm {
+        margin-bottom: 10px;
+        line-height: 1.2;
+        list-style: none;
+
+        p {
+          line-height: 20px;
+          font-size: 12px;
+          color: #999;
+        }
+      }
+    }
+    .footer-right {
+      max-width: 314px;
+      width: 120px;
+      padding-top: 22px;
+      img {
+        max-width: 100%;
+        height: auto;
+        transition: opacity 0.3s;
+        vertical-align: middle;
+      }
+    }
+  }
+}
+
+#scroll-to-top {
+  border-radius: 3px;
+  position: fixed;
+  bottom: 150px;
+  right: 2%;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  line-height: 37px;
+  color: rgba(0, 0, 0, 0.4);
+  display: block;
+  z-index: 50;
+  color: #fff;
+  background-color: #54b5db;
+  border-color: #54b5db;
+}
+
+@media (min-width: 768px) {
+  .container {
+    width: 750px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
 }
 </style>
