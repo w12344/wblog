@@ -1,7 +1,7 @@
 <!--
  * @Author: wuzhiqiang
  * @Date: 2020-11-19 14:56:29
- * @LastEditTime: 2020-11-27 17:45:18
+ * @LastEditTime: 2020-11-27 18:38:49
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\components\Header\Index.vue
@@ -14,7 +14,7 @@
           <el-carousel height="335px" direction="vertical" :autoplay="false">
             <el-carousel-item v-for="(item, index) in bannerList" :key="index">
               <div class="big-slider-item">
-                <a href="https://qicao.cn/sanwen/7.html" :style="{ backgroundImage: 'url(' + item.src + ')' }" class="big-slider-img"
+                <a href="https://qicao.cn/sanwen/7.html" :style="{ backgroundImage: 'url(' + item.banner_path + ')' }" class="big-slider-img"
                   ><i class="mask"></i>
                   <div class="title"><span class="badge arc_v2">推荐</span>心里的远方</div></a
                 >
@@ -46,22 +46,18 @@
   <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator';
 import { getBannerData } from '../../api/home';
+import { ResponseData } from '../../api/request';
 @Component
 export default class Header extends Vue {
-  private bannerList: any = [
-    { key: '', src: require('../../assets/images/home/banner1.jpg') },
-    { key: '', src: require('../../assets/images/home/banner1.jpg') },
-    { key: '', src: require('../../assets/images/home/banner1.jpg') },
-  ];
+  private bannerList: any = [];
 
-  private getBannerData() {
-    getBannerData().then((res) => {
-        const { code, data, message } = res.data;
+  private async getBannerData() {
+    await getBannerData().then((response: any) => {
+        const { code, data, errorMsg } = response;
         if (code === 200) {
-          console.log(message)
-          // this.couponList.push.apply(this.couponList, data);
+          this.bannerList = data;
         } else {
-          console.log(message)
+          console.log(errorMsg);
         }
       })
       .catch((error) => {
@@ -70,7 +66,7 @@ export default class Header extends Vue {
   }
 
   mounted() {
-    this.getBannerData()
+    this.getBannerData();
   }
 }
 </script>
