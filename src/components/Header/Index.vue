@@ -1,7 +1,7 @@
 <!--
- * @Author: wuzhiqiang
+ * @Author: WZQ
  * @Date: 2020-11-19 14:56:29
- * @LastEditTime: 2020-11-25 14:47:17
+ * @LastEditTime: 2020-11-27 16:34:06
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\components\Header\Index.vue
@@ -20,7 +20,7 @@
           <div class="search-warp clearfix">
             <form method="get" action="">
               <div class="search-area">
-                <el-input class="search-input" v-model="input" placeholder="搜索感兴趣的知识和文章"></el-input>
+                <el-input class="search-input" v-model="keyWord" placeholder="搜索感兴趣的知识和文章"></el-input>
               </div>
             </form>
             <i class="el-icon-search"></i>
@@ -30,83 +30,106 @@
           </div>
         </div>
       </div>
-      <div class="menu_nav">
-        <div class="new_header container clearnav">
-          <div class="top-bar-left pull-left navs">
-            <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
-              <div v-for="(menuItem, menuIndex) in menuList" :key="menuIndex">
-                <el-menu-item index="1" v-if="!menuItem.isSubmenu">
-                  <i :class="['menu-icon', 'icon iconfont', menuItem.icon]"></i>
-                  <span class="menu-name">{{ menuItem.menuName }}</span>
-                  <i v-if="menuItem.hot" :class="['menu-icon', 'icon iconfont icon-new']"></i>
-                </el-menu-item>
-                <el-submenu index="2" v-else>
-                  <template slot="title"><i class="icon iconfont icon-gengduo"></i></template>
-                  <template v-if="menuItem.childrenList">
-                    <el-menu-item v-for="(menuChildItem, menuChildIndex) in menuItem.childrenList" :key="menuChildIndex">{{ menuChildItem.menuName }}</el-menu-item>
-                  </template>
-                </el-submenu>
+      <transition name="bounce">
+        <div class="menu_nav">
+          <div class="new_header container clearnav">
+            <div class="top-bar-left pull-left navs">
+              <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+                <div v-for="(menuItem, menuIndex) in menuList" :key="menuIndex">
+                  <el-menu-item index="1" v-if="!menuItem.isSubmenu">
+                    <i :class="['menu-icon', 'icon iconfont', menuItem.icon]"></i>
+                    <span class="menu-name">{{ menuItem.menuName }}</span>
+                    <i v-if="menuItem.hot" :class="['menu-icon', 'icon iconfont icon-new']"></i>
+                  </el-menu-item>
+                  <el-submenu index="2" v-else>
+                    <template slot="title"><i class="icon iconfont icon-gengduo"></i></template>
+                    <template v-if="menuItem.childrenList">
+                      <el-menu-item v-for="(menuChildItem, menuChildIndex) in menuItem.childrenList" :key="menuChildIndex">{{ menuChildItem.menuName }}</el-menu-item>
+                    </template>
+                  </el-submenu>
+                </div>
+              </el-menu>
+              <div class="line"></div>
+            </div>
+            <div class="top-bar-right pull-right text-right">
+              <div class="top-admin">
+                <div class="nav-item" v-for="(navItem, navIndex) in navList" :key="navIndex" @click="handleNavItemChange(navItem)">
+                  <i :class="'el-icon-' + navItem.icon"></i>
+                  <span class="nav-item-text">{{ navItem.navName }}</span>
+                </div>
+                <el-switch v-model="themeStatus" active-color="#3b5160" inactive-color="#3b5160"> </el-switch>
               </div>
-            </el-menu>
-            <div class="line"></div>
-          </div>
-          <div class="top-bar-right pull-right text-right">
-            <div class="top-admin">
-              <div class="nav-item" v-for="(navItem, navIndex) in navList" :key="navIndex">
-                <i :class="'el-icon-' + navItem.icon"></i>
-                <span class="nav-item-text">{{ navItem.navName }}</span>
-              </div>
-              <el-switch v-model="themeStatus" active-color="#3b5160" inactive-color="#3b5160"> </el-switch>
             </div>
           </div>
         </div>
-      </div>
+      </transition>
     </div>
+    <div id="percentageCounter" :style="{ width: scrollVal + '%' }"></div>
   </div>
 </template>
-  <script>
-export default {
-  data() {
-    return {
-      activeIndex: '1',
-      activeIndex2: '1',
-      menuList: [
-        { key: 'home', menuName: '首页', icon: 'icon-shouye', path: '', isSubmenu: false, hot: false },
-        { key: 'home', menuName: '范文', icon: '', path: '', isSubmenu: false, hot: false },
-        { key: 'home', menuName: '简历', icon: '', path: '', isSubmenu: false, hot: true },
-        { key: 'home', menuName: '诗词', icon: '', path: '', isSubmenu: false, hot: false },
-        { key: 'home', menuName: '名言', icon: '', path: '', isSubmenu: false, hot: false },
-        { key: 'home', menuName: '作文', icon: '', path: '', isSubmenu: false, hot: false },
-        { key: 'home', menuName: '散文', icon: '', path: '', isSubmenu: false, hot: false },
-        { key: 'home', menuName: '励志', icon: '', path: '', isSubmenu: false, hot: false },
-        {
-          key: 'home',
-          menuName: '...',
-          icon: '',
-          path: '',
-          hot: false,
-          isSubmenu: true,
-          childrenList: [
-            { key: 'home', menuName: '首页', icon: '', path: '', isSubmenu: false },
-            { key: 'home', menuName: '范文', icon: '', path: '', isSubmenu: false },
-            { key: 'home', menuName: '诗词', icon: '', path: '', isSubmenu: false },
-          ],
-        },
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import { NavParams, NavListItem } from '../../const/home';
+
+@Component
+export default class Header extends Vue {
+  private activeIndex: string = '1';
+  private activeIndex2: string = '1';
+  private keyWord: string = '';
+  private scrollTop: string = '';
+  private menuList: Array<NavParams> = [
+    { key: 'home', menuName: '首页', icon: 'icon-shouye', path: '', isSubmenu: false, hot: false },
+    { key: 'home', menuName: '范文', icon: '', path: '', isSubmenu: false, hot: false },
+    { key: 'home', menuName: '简历', icon: '', path: '', isSubmenu: false, hot: true },
+    { key: 'home', menuName: '诗词', icon: '', path: '', isSubmenu: false, hot: false },
+    { key: 'home', menuName: '名言', icon: '', path: '', isSubmenu: false, hot: false },
+    { key: 'home', menuName: '作文', icon: '', path: '', isSubmenu: false, hot: false },
+    { key: 'home', menuName: '散文', icon: '', path: '', isSubmenu: false, hot: false },
+    { key: 'home', menuName: '励志', icon: '', path: '', isSubmenu: false, hot: false },
+    {
+      key: 'home',
+      menuName: '....',
+      icon: '',
+      path: '',
+      hot: false,
+      isSubmenu: true,
+      childrenList: [
+        { key: 'home', menuName: '首页', icon: '', path: '', isSubmenu: false },
+        { key: 'home', menuName: '范文', icon: '', path: '', isSubmenu: false },
+        { key: 'home', menuName: '诗词', icon: '', path: '', isSubmenu: false },
       ],
-      themeStatus: true,
-      navList: [
-        { key: 'home', navName: '排行榜', icon: 's-data', path: '' },
-        { key: 'home', navName: '统计', icon: 'notebook-2', path: '' },
-        { key: 'home', navName: '登录', icon: 'user', path: '' },
-      ],
-    };
-  },
-  methods: {
-    handleSelect(key, keyPath) {
-      console.log(key, keyPath);
     },
-  },
-};
+  ];
+  private themeStatus: boolean = true;
+  private navList: Array<NavListItem> = [
+    { key: 'home', navName: '排行榜', icon: 's-data', path: '' },
+    { key: 'home', navName: '统计', icon: 'notebook-2', path: '' },
+    { key: 'home', navName: '登录', icon: 'user', path: '/login' },
+  ];
+  mounted() {
+    //获取当前位置距离顶部距离的百分比
+    let totalH = document.body.scrollHeight || document.documentElement.scrollHeight;
+    let clientH = window.innerHeight || document.documentElement.clientHeight;
+    window.addEventListener('scroll', (e) => {
+      let validH = totalH - clientH;
+      let scrollH = document.body.scrollTop || document.documentElement.scrollTop;
+      this.scrollTop = ((scrollH / validH) * 100).toFixed(2);
+    });
+  }
+
+  get scrollVal() {
+    return this.scrollTop;
+  }
+
+  private handleNavItemChange = (navItem: NavListItem) => {
+    if (navItem.path === '/login') {
+      this.$router.push(navItem.path);
+    }
+  };
+  private handleSelect = (key: number, keyPath: string) => {
+    console.log(key, keyPath);
+  };
+}
 </script>
 <style scoped lang="scss">
 /deep/.el-menu {
@@ -132,6 +155,15 @@ export default {
     background-color: #f3f5f6;
     border: none;
   }
+}
+
+#percentageCounter {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 3px;
+  z-index: 2;
+  background-color: #448ef6;
 }
 
 .container {
@@ -263,6 +295,7 @@ export default {
             -webkit-box-align: center;
             align-items: center;
             .nav-item {
+              cursor: pointer;
               .nav-item-text {
                 color: #555;
                 line-height: 20px;

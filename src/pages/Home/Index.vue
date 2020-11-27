@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-11-18 18:07:41
- * @LastEditTime: 2020-11-25 18:41:51
+ * @LastEditTime: 2020-11-27 16:15:37
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\components\HelloWorld.vue
@@ -18,6 +18,7 @@
         <div class="container-box-right">
           <div class="widget-area">
             <div class="theiaStickySidebar">
+              <InterAuthor></InterAuthor>
               <HotArticle></HotArticle>
               <MostThumbs></MostThumbs>
               <TagList></TagList>
@@ -33,7 +34,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue';
-import Component from 'vue-class-component';
+import { Component } from 'vue-property-decorator';
 import PageHeader from '../../components/Header/Index.vue';
 import NewArticle from './components/newArticle/index.vue';
 import PageBanner from '../../components/Banner/Index.vue';
@@ -41,6 +42,7 @@ import PageFooter from '../../components/Footer/Index.vue';
 import HotArticle from './components/hotArticle/Index.vue';
 import MostThumbs from './components/mostThumbs/Index.vue';
 import TagList from './components/tagList/Index.vue';
+import InterAuthor from './components/InterAuthor/Index.vue';
 import HotCommentPage from './components/hotCommentPage/Index.vue';
 import RecentComment from './components/recentComment/Index.vue';
 
@@ -54,15 +56,14 @@ import RecentComment from './components/recentComment/Index.vue';
     MostThumbs,
     HotCommentPage,
     TagList,
-    RecentComment
+    InterAuthor,
+    RecentComment,
   },
 })
 export default class Home extends Vue {}
 </script>
 <style lang="scss" scoped>
-.el-backtop {
-  height: 0;
-}
+
 .container {
   display: flex;
   margin-right: auto;

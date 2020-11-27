@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-11-24 18:51:04
- * @LastEditTime: 2020-11-25 15:21:26
+ * @LastEditTime: 2020-11-26 15:33:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\components\Footer\Index.vue
@@ -87,6 +87,9 @@ export default {
 };
 </script>
 <style lang="scss">
+.el-backtop {
+  height: 0;
+}
 .site-footer {
   margin-top: 40px;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
@@ -95,8 +98,10 @@ export default {
   background-color: #fff;
   .container {
     display: flex;
-    margin:0 auto;
+    margin: 0 auto;
     justify-content: space-between;
+    box-sizing: border-box;
+    padding: 0 15px;
     .footer-left {
       text-align: left;
       max-width: 857px;

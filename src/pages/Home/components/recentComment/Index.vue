@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-11-25 17:51:23
- * @LastEditTime: 2020-11-25 18:41:06
+ * @LastEditTime: 2020-11-26 15:31:21
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\pages\Home\components\hotCommentPage\Index.vue
@@ -26,7 +26,41 @@
             <p><a href="https://qicao.cn/guestbook.html#comment-11">弄的真不错。</a></p>
             <p></p>
           </div>
-          <h2><i class="icon iconfont icon-taolunqu"></i><a href="https://qicao.cn/guestbook.html#comment-11"> 给我留言 </a></h2>
+          <h2><i class="el-icon-chat-line-round"></i><a href="https://qicao.cn/guestbook.html#comment-11"> 给我留言 </a></h2>
+        </div>
+         <div class="item">
+          <div class="meta">
+            <div class="meta-item">
+              <span class="comment-avatar"><i class="thumb" style="background-image: url(https://cdn.v2ex.com/gravatar/fbbe2b6395880e77512d09227e69e2ec?s=96&amp;d=mp&amp;r=g)"></i></span> zizdog<span
+                class="autlv aut-1"
+                >Lv.1</span
+              >
+            </div>
+            <span class="views">6天前</span>
+          </div>
+          <div class="comment-content">
+            <p><a href="https://qicao.cn/guestbook.html#comment-11"></a></p>
+            <p><a href="https://qicao.cn/guestbook.html#comment-11">弄的真不错。</a></p>
+            <p></p>
+          </div>
+          <h2><i class="el-icon-chat-line-round"></i><a href="https://qicao.cn/guestbook.html#comment-11"> 给我留言 </a></h2>
+        </div>
+         <div class="item">
+          <div class="meta">
+            <div class="meta-item">
+              <span class="comment-avatar"><i class="thumb" style="background-image: url(https://cdn.v2ex.com/gravatar/fbbe2b6395880e77512d09227e69e2ec?s=96&amp;d=mp&amp;r=g)"></i></span> zizdog<span
+                class="autlv aut-1"
+                >Lv.1</span
+              >
+            </div>
+            <span class="views">6天前</span>
+          </div>
+          <div class="comment-content">
+            <p><a href="https://qicao.cn/guestbook.html#comment-11"></a></p>
+            <p><a href="https://qicao.cn/guestbook.html#comment-11">弄的真不错。</a></p>
+            <p></p>
+          </div>
+          <h2><i class="el-icon-chat-line-round"></i><a href="https://qicao.cn/guestbook.html#comment-11"> 给我留言 </a></h2>
         </div>
       </div>
     </section>
@@ -114,6 +148,21 @@ export default class hotCommentPage extends Vue {}
               transition: all 0.2s;
             }
           }
+          .aut-1 {
+            background: #448ef6;
+          }
+          .autlv {
+            font-size: 10px;
+            color: #fff;
+            display: inline-block;
+            vertical-align: text-top;
+            font-weight: normal;
+            border-radius: 2px;
+            line-height: 1.4;
+            padding: 0 4px;
+            margin-left: 5px;
+            letter-spacing: 0px;
+          }
         }
         .comment-content {
           padding: 5px 10px;
@@ -124,6 +173,15 @@ export default class hotCommentPage extends Vue {}
           margin-bottom: 5px;
           position: relative;
           transition: all 0.2s;
+          p {
+            text-align: justify;
+            line-height: 23px;
+            max-height: 50px;
+            overflow: hidden;
+            a {
+              color: #333;
+            }
+          }
         }
         h2 {
           font-size: 12px;
@@ -135,6 +193,10 @@ export default class hotCommentPage extends Vue {}
           color: #333;
           font-weight: normal;
           margin-bottom: 5px;
+          text-align: left;
+          a{
+            color:#333;
+          }
         }
       }
     }

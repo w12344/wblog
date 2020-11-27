@@ -1,7 +1,7 @@
 /*
  * @Author: WZQ
  * @Date: 2020-11-18 18:07:41
- * @LastEditTime: 2020-11-24 14:20:35
+ * @LastEditTime: 2020-11-27 10:27:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\main.ts
@@ -12,6 +12,7 @@ import Vue from 'vue'
 import App from "./App.vue"
 import "./utils/index";
 import './assets/styles/border.scss'
+import './assets/styles/common.scss'
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/styles/element.scss';
 import './assets/styles/reset.scss'

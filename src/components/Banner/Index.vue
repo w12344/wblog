@@ -1,7 +1,7 @@
 <!--
  * @Author: wuzhiqiang
  * @Date: 2020-11-19 14:56:29
- * @LastEditTime: 2020-11-25 18:14:18
+ * @LastEditTime: 2020-11-27 17:45:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\components\Header\Index.vue
@@ -12,7 +12,7 @@
       <div class="grid-content bg-purple">
         <div class="recommed big-slider">
           <el-carousel height="335px" direction="vertical" :autoplay="false">
-            <el-carousel-item v-for="item in bannerList" :key="item">
+            <el-carousel-item v-for="(item, index) in bannerList" :key="index">
               <div class="big-slider-item">
                 <a href="https://qicao.cn/sanwen/7.html" :style="{ backgroundImage: 'url(' + item.src + ')' }" class="big-slider-img"
                   ><i class="mask"></i>
@@ -43,18 +43,36 @@
     </div>
   </div>
 </template>
-  <script>
-export default {
-  data() {
-    return {
-      bannerList: [
-        { key: '', src: require('../../assets/images/home/banner1.jpg') },
-        { key: '', src: require('../../assets/images/home/banner1.jpg') },
-        { key: '', src: require('../../assets/images/home/banner1.jpg') },
-      ],
-    };
-  },
-};
+  <script lang="ts">
+import { Vue, Component } from 'vue-property-decorator';
+import { getBannerData } from '../../api/home';
+@Component
+export default class Header extends Vue {
+  private bannerList: any = [
+    { key: '', src: require('../../assets/images/home/banner1.jpg') },
+    { key: '', src: require('../../assets/images/home/banner1.jpg') },
+    { key: '', src: require('../../assets/images/home/banner1.jpg') },
+  ];
+
+  private getBannerData() {
+    getBannerData().then((res) => {
+        const { code, data, message } = res.data;
+        if (code === 200) {
+          console.log(message)
+          // this.couponList.push.apply(this.couponList, data);
+        } else {
+          console.log(message)
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
+  mounted() {
+    this.getBannerData()
+  }
+}
 </script>
 <style scoped lang="scss">
 .banner-box {

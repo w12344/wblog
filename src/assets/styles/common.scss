@@ -1,0 +1,31 @@
+input[type=text],
+input[type=password],
+input[type=email],
+textarea {
+    background: #FFF;
+    border: 1px solid #D9D9D6;
+    padding: 7px;
+    border-radius: 2px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+input:focus {
+    border: 2px rgb(16, 16, 16) solid;
+}
+
+.text-l {
+    padding: 10px!important;
+    font-size: 16px;
+}
+
+.w-100 {
+    width: 100%;
+}
+
+.btn-l {
+    height: 40px;
+    font-size: 16px;
+    font-weight: bold;
+}

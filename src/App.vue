@@ -1,21 +1,24 @@
 <!--
  * @Author: your name
  * @Date: 2020-11-18 18:07:41
- * @LastEditTime: 2020-11-25 15:18:36
+ * @LastEditTime: 2020-11-27 16:03:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\App.vue
 -->
 <template>
-  <div id="app">
+  <div id="app" ref="scroll">
     <router-view />
   </div>
 </template>
 
-<script>
-export default {
-  name: 'App',
-};
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
+
+@Component
+export default class App extends Vue {
+
+}
 </script>
 
 <style>
@@ -25,6 +28,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height:100%;
 }
 
 </style>
