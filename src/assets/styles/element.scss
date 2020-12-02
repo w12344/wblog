@@ -22,7 +22,12 @@
 }
 
 .el-input,
-.el-input__inner {
+.el-input-group__prepend .el-input__inner {
     height: 36px;
     line-height: 36px;
+}
+
+.el-button {
+    background-color: #467b96 !important;
+    border: none;
 }

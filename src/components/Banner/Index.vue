@@ -1,7 +1,7 @@
 <!--
  * @Author: wuzhiqiang
  * @Date: 2020-11-19 14:56:29
- * @LastEditTime: 2020-11-27 18:38:49
+ * @LastEditTime: 2020-11-30 09:55:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\components\Header\Index.vue
@@ -16,7 +16,7 @@
               <div class="big-slider-item">
                 <a href="https://qicao.cn/sanwen/7.html" :style="{ backgroundImage: 'url(' + item.banner_path + ')' }" class="big-slider-img"
                   ><i class="mask"></i>
-                  <div class="title"><span class="badge arc_v2">推荐</span>心里的远方</div></a
+                  <div class="title"><span class="badge arc_v2">推荐</span>{{item.banner_info}}</div></a
                 >
                 <div class="entyr-icon"><i class="icon iconfont icon-shoucang"></i></div>
               </div>
@@ -53,7 +53,7 @@ export default class Header extends Vue {
 
   private async getBannerData() {
     await getBannerData().then((response: any) => {
-        const { code, data, errorMsg } = response;
+        const { code, data, errorMsg } = response.data;
         if (code === 200) {
           this.bannerList = data;
         } else {

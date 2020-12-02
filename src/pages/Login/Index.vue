@@ -1,7 +1,7 @@
 <!--
  * @Author: WZQ
  * @Date: 2020-11-18 18:07:41
- * @LastEditTime: 2020-11-27 15:07:00
+ * @LastEditTime: 2020-12-02 14:45:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\components\HelloWorld.vue
@@ -10,35 +10,95 @@
   <div class="login-box typecho-login-wrap">
     <div class="typecho-login">
       <h1><a href="http://typecho.org" class="i-logo">Typecho</a></h1>
-      <form action="https://qicao.cn/index.php/action/login?_=c8bc4f9282ada562b5ecc3e1ad45eff0" method="post" name="login" role="form">
-        <p>
-          <label for="name" class="sr-only">用户名</label>
-          <input type="text" id="name" name="name" value="" placeholder="用户名" class="text-l w-100" autofocus="" />
-        </p>
-        <p>
-          <label for="password" class="sr-only">密码</label>
-          <input type="password" id="password" name="password" class="text-l w-100" placeholder="密码" />
-        </p>
-        <p class="submit">
-          <button type="submit" class="btn btn-l w-100 primary">登录</button>
-          <input type="hidden" name="referer" value="" />
-        </p>
-        <p>
+      <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+        <el-form-item prop="username">
+          <el-input type="text" id="name" name="name" v-model="ruleForm.username" value="" placeholder="用户名" class=" w-100" autofocus="" />
+        </el-form-item>
+        <el-form-item prop="password">
+          <el-input type="password" id="password" v-model="ruleForm.password" name="password" class=" w-100" placeholder="密码" />
+        </el-form-item>
+        <el-form-item>
+          <el-button type="submit" @click="handleLoginChange('ruleForm')" class="btn btn-l w-100 primary">登录</el-button>
+        </el-form-item>
+        <p class="rember">
           <label for="remember"><input type="checkbox" name="remember" class="checkbox" value="1" id="remember" /> 下次自动登录</label>
+          <label for="remember">没有账号,<router-link :to="{ name: 'register' }">前往注册</router-link></label>
         </p>
-      </form>
-      <p class="more-link">
-        <router-link  :to="{name:'home'}">返回首页</router-link>
-      </p>
+      </el-form>
+      <!-- <p class="more-link">
+        <router-link :to="{ name: 'home' }">返回首页</router-link>
+      </p> -->
     </div>
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue';
+import { validatePass, validateUsername } from '../../utils/utils';
+import {loginData} from '../../const/home'
+import { Component } from 'vue-property-decorator';
+import { Getter, Action, State, namespace } from "vuex-class";
+import { login } from '../../api/home';
+
+const loginModule = namespace('loginStore')
+@Component
 export default class Login extends Vue {
+  @loginModule.State(state => state.loginData) loginData!: loginData;
+
+  //登录信息
+  private ruleForm: any = {
+    username: '',
+    password: '',
+  };
+
+  //注册验证规则
+  private rules: any = {
+    password: [{ validator: validatePass('请输入密码'), trigger: 'blur' }],
+    username: [{ validator: validateUsername('请输入4到16位包含字母数字或者下划线的用户名'), trigger: 'blur' }],
+  };
+  private handleLoginChange(formName: string) {
+    let form: any = this.$refs[formName];
+    form.validate((valid: any) => {
+      if (valid) {
+        this.handleLogin(this.ruleForm);
+      } else {
+        this.$message.error('输入的信息有误,请重新填写!');
+        return false;
+      }
+    });
+  }
+
+  private async handleLogin(params: any) {
+    await login(params).then((response: any) => {
+        const { code, data, errorMsg,success } = response.data;
+        if (success) {
+          this.$message({ type: 'success', message: '登录成功', center: true });
+        } else {
+          this.$message.error({ message:errorMsg , center: true });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
 }
 </script>
 <style lang="scss" scoped>
+.form-row {
+  margin-bottom: 10px;
+  .row-babel {
+    font-size: 14px;
+  }
+  .row-text {
+    font-weight: bold;
+  }
+}
+/deep/.el-form {
+  .el-form-item {
+    &__content {
+      margin-left: 0 !important;
+    }
+  }
+}
 .typecho-login-wrap {
   display: table;
   margin: 0 auto;
@@ -46,7 +106,7 @@ export default class Login extends Vue {
   .typecho-login {
     display: table-cell;
     padding: 30px 0 100px;
-    width: 280px;
+    width: 320px;
     text-align: center;
     vertical-align: middle;
     h1 {
@@ -65,22 +125,9 @@ export default class Login extends Vue {
         opacity: 0.15;
       }
     }
-    form {
-      p {
+    .el-form {
+      .el-form-item {
         display: block;
-        margin-block-start: 14px;
-        margin-block-end: 14px;
-        .sr-only {
-          border: 0;
-          height: 1px;
-          margin: -1px;
-          overflow: hidden;
-          position: absolute;
-          width: 1px;
-        }
-        .text-l{
-          height:40px;
-        }
         .submit {
           background-color: #467b96;
           cursor: pointer;
@@ -95,6 +142,10 @@ export default class Login extends Vue {
           border-radius: 2px;
           color: #fff;
         }
+      }
+      .rember {
+        display: flex;
+        justify-content: space-between;
       }
     }
     .more-link {

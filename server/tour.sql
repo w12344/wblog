@@ -44,6 +44,37 @@ UNLOCK TABLES;
 -- Table structure for table `tour_classify`
 --
 
+
+DROP TABLE IF EXISTS `tour_menu`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tour_menu` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `menuName` text,
+  `menuLevel` int(1) NOT NULL DEFAULT 1,
+  `menuStatus` int(1) NOT NULL DEFAULT 1,
+  `menuUrl` varchar(255) DEFAULT NULL,
+  `list` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+DROP TABLE IF EXISTS `tour_`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tour_menu` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `menuName` text,
+  `menuLevel` int(1) NOT NULL DEFAULT 1,
+  `menuStatus` int(1) NOT NULL DEFAULT 1,
+  `menuUrl` varchar(255) DEFAULT NULL,
+  `list` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
 DROP TABLE IF EXISTS `tour_classify`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -214,11 +245,9 @@ DROP TABLE IF EXISTS `tour_user`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tour_user` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `user_name` varchar(60) DEFAULT '锦囊团用户',
-  `user_phone` varchar(11) NOT NULL,
-  `user_pwd` varchar(255) NOT NULL,
-  `user_headpic` varchar(255) NOT NULL DEFAULT 'http://jinnangtuan.com/static/img/users/jinnangusers/head.png',
-  `user_sex` int(1) NOT NULL DEFAULT '1',
+  `username` varchar(60) NOt NULL,
+  `telphone` varchar(11) NOT NULL,
+  `password` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

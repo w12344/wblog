@@ -1,7 +1,7 @@
 <!--
  * @Author: WZQ
  * @Date: 2020-11-19 14:56:29
- * @LastEditTime: 2020-11-27 16:34:06
+ * @LastEditTime: 2020-11-30 10:01:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\components\Header\Index.vue
@@ -70,6 +70,7 @@
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { NavParams, NavListItem } from '../../const/home';
+import {getMenuData} from '../../api/home'
 
 @Component
 export default class Header extends Vue {
@@ -77,35 +78,32 @@ export default class Header extends Vue {
   private activeIndex2: string = '1';
   private keyWord: string = '';
   private scrollTop: string = '';
-  private menuList: Array<NavParams> = [
-    { key: 'home', menuName: '首页', icon: 'icon-shouye', path: '', isSubmenu: false, hot: false },
-    { key: 'home', menuName: '范文', icon: '', path: '', isSubmenu: false, hot: false },
-    { key: 'home', menuName: '简历', icon: '', path: '', isSubmenu: false, hot: true },
-    { key: 'home', menuName: '诗词', icon: '', path: '', isSubmenu: false, hot: false },
-    { key: 'home', menuName: '名言', icon: '', path: '', isSubmenu: false, hot: false },
-    { key: 'home', menuName: '作文', icon: '', path: '', isSubmenu: false, hot: false },
-    { key: 'home', menuName: '散文', icon: '', path: '', isSubmenu: false, hot: false },
-    { key: 'home', menuName: '励志', icon: '', path: '', isSubmenu: false, hot: false },
-    {
-      key: 'home',
-      menuName: '....',
-      icon: '',
-      path: '',
-      hot: false,
-      isSubmenu: true,
-      childrenList: [
-        { key: 'home', menuName: '首页', icon: '', path: '', isSubmenu: false },
-        { key: 'home', menuName: '范文', icon: '', path: '', isSubmenu: false },
-        { key: 'home', menuName: '诗词', icon: '', path: '', isSubmenu: false },
-      ],
-    },
-  ];
+  private menuList: Array<NavParams> = [];
   private themeStatus: boolean = true;
   private navList: Array<NavListItem> = [
     { key: 'home', navName: '排行榜', icon: 's-data', path: '' },
     { key: 'home', navName: '统计', icon: 'notebook-2', path: '' },
     { key: 'home', navName: '登录', icon: 'user', path: '/login' },
   ];
+
+  created(){
+    this.getMenuData()
+  }
+
+  private async getMenuData() {
+    await getMenuData().then((response: any) => {
+        const { code, data, errorMsg } = response.data;
+        if (code === 200) {
+          this.menuList = data;
+        } else {
+          console.log(errorMsg);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+
   mounted() {
     //获取当前位置距离顶部距离的百分比
     let totalH = document.body.scrollHeight || document.documentElement.scrollHeight;
