@@ -1,7 +1,7 @@
 /*
  * @Author: WZQ
  * @Date: 2020-11-27 16:49:49
- * @LastEditTime: 2020-12-03 11:39:44
+ * @LastEditTime: 2020-11-27 17:27:57
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\server\helper\db.js
@@ -12,7 +12,7 @@ const mysql = require('mysql');
 const db = mysql.createConnection({
     host: '0.0.0.0',
     user: 'root',
-    password: 'root',
+    password: 'admin',
     database: 'tour'
 });
 db.connect();

@@ -34,13 +34,6 @@ CREATE TABLE `tour_banner` (
 -- Dumping data for table `tour_banner`
 --
 
-LOCK TABLES `tour_banner` WRITE;
-/*!40000 ALTER TABLE `tour_banner` DISABLE KEYS */;
-INSERT INTO `tour_banner` VALUES (1,'http://jinnangtuan.com/uploads/20170828/1503899882.jpg',NULL),(2,'http://jinnangtuan.com/uploads/20170828/1503914220.jpg',NULL),(3,'http://jinnangtuan.com/uploads/20170828/1503913833.jpg',NULL),(4,'http://jinnangtuan.com/uploads/20170828/1503914220.jpg',NULL),(5,'http://imgoacdn.aliyuncs.com/Y2o3aW8wdW52MDAwczNkNXBwcXJ3NTN2Mg%3D%3D_855263232_NzUwKjQyMg%3D%3D.jpg?t=1505916543122',NULL),(6,'http://jinnangtuan.com/uploads/20170828/1503899882.jpg',NULL),(7,'http://jinnangtuan.com/uploads/20170828/1503913833.jpg',NULL),(8,'http://jinnangtuan.com/uploads/20170828/1503914220.jpg',NULL);
-/*!40000 ALTER TABLE `tour_banner` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `tour_classify`
 --
 
@@ -60,68 +53,22 @@ CREATE TABLE `tour_menu` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 
-DROP TABLE IF EXISTS `tour_`;
+DROP TABLE IF EXISTS `tour_blog_content`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tour_menu` (
+CREATE TABLE `tour_blog_content` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
-  `menuName` text,
-  `menuLevel` int(1) NOT NULL DEFAULT 1,
-  `menuStatus` int(1) NOT NULL DEFAULT 1,
-  `menuUrl` varchar(255) DEFAULT NULL,
-  `list` varchar(255) DEFAULT NULL,
+  `content` text,
+  `img` int(1) NOT NULL DEFAULT 1,
+  `user_id` int(10) NOT NULL DEFAULT 1,
+  `collection_num` varchar(255) DEFAULT 0,
+  `keywords` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 
-DROP TABLE IF EXISTS `tour_classify`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tour_classify` (
-  `id` int(1) NOT NULL AUTO_INCREMENT,
-  `classify_name` varchar(10) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
---
--- Dumping data for table `tour_classify`
---
-
-LOCK TABLES `tour_classify` WRITE;
-/*!40000 ALTER TABLE `tour_classify` DISABLE KEYS */;
-INSERT INTO `tour_classify` VALUES (1,'购物'),(2,'退税');
-/*!40000 ALTER TABLE `tour_classify` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `tour_comment`
---
-
-DROP TABLE IF EXISTS `tour_comment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tour_comment` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `comment_content` text,
-  `comment_star` int(1) NOT NULL DEFAULT '1',
-  `comment_user_phone` varchar(11) DEFAULT NULL,
-  `comment_time` varchar(30) DEFAULT NULL,
-  `comment_coupon_id` int(1) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tour_comment`
---
-
-LOCK TABLES `tour_comment` WRITE;
-/*!40000 ALTER TABLE `tour_comment` DISABLE KEYS */;
-INSERT INTO `tour_comment` VALUES (39,'5分好评',5,'13126919251','1568439182401',15),(40,'好吧牛奶',4,'13126919251','1568467569520',4),(41,'广播操b n d',3,'13126919251','1568471287747',21),(42,'最新评论',5,'13126919251','1568517700355',22);
-/*!40000 ALTER TABLE `tour_comment` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `tour_coupon`
