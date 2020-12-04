@@ -177,6 +177,30 @@ input::-moz-focus-inner {
     border: 0
 }
 
+input::-webkit-input-placeholder,
+textarea::-webkit-input-placeholder {
+    /* WebKit browsers */
+    color: rgb(218, 217, 217);
+}
+
+input:-moz-placeholder,
+textarea::-moz-placeholder {
+    /* Mozilla Firefox 4 to 18 */
+    color: rgb(218, 217, 217);
+}
+
+input::-moz-placeholder,
+textarea::-moz-placeholder {
+    /* Mozilla Firefox 19+ */
+    color: rgb(218, 217, 217);
+}
+
+input:-ms-input-placeholder,
+textarea:-ms-input-placeholder {
+    /* Internet Explorer 10+ */
+    color: rgb(218, 217, 217);
+}
+
 mark {
     background-color: transparent
 }

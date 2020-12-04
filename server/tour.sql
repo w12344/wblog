@@ -42,14 +42,23 @@ DROP TABLE IF EXISTS `tour_menu`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tour_menu` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `menuName` text,
-  `menuLevel` int(1) NOT NULL DEFAULT 1,
-  `menuStatus` int(1) NOT NULL DEFAULT 1,
-  `menuUrl` varchar(255) DEFAULT NULL,
-  `list` varchar(255) DEFAULT NULL,
+  `createNick` varchar(255) DEFAULT NULL,
+  `fileName`  varchar(255) DEFAULT NULL,
+  `fileUrl` varchar(255) DEFAULT NULL,
+  `gmtCreate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `gmtModified` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  `id` int(100) NOT NULL AUTO_INCREMENT,
+  `menuLevel` varchar(255) DEFAULT NULL,
+  `menuName` varchar(255) DEFAULT NULL,
+  `menuOrder` varchar(255) DEFAULT NULL,
+  `menuStatus` int(100) NOT NULL DEFAULT 1,
+  `menuType` int(100) NOT NULL DEFAULT 1,
+  `menuUrl`  varchar(255) DEFAULT NULL,
+  `modifiedNick` varchar(255) DEFAULT NULL,
+  `operationCode` varchar(255) DEFAULT NULL,
+  `parentId` int(100) NOT NULL DEFAULT 0,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 

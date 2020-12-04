@@ -11,11 +11,63 @@ const multer = require('../helper/multer');
 // const { putFile } = require('../helper/qiniu-oss');
 
 
+//获取用会列表
+router.get('/list', async(req, res, next) => {
+    const { current, pageSize = 10 } = req.query;
+    if (current) {
+        current_page = parseInt(current);
+    }
+    let last_page = current_page - 1;
+    if (current_page <= 1) {
+        last_page = 1;
+    }
+    let next_page = current_page + 1;
+    try {
+        const data = await db(`SELECT * FROM tour_user limit ${(current_page -1)*pageSize},${pageSize}`);
+        if (!data[0]) {
+            res.json({ code: 200, data: [], errorMsg: '已到最后一页,请返回', success: true });
+        } else {
+            res.json({
+                code: 200,
+                last_page: last_page,
+                next_page: next_page,
+                current_page: current_page,
+                data: data,
+                success: true
+            });
+        }
+    } catch (e) {
+        res.json({ code: 0, data: [], errorMsg: '数据查询有误', success: false });
+    }
+});
+
 
 /**
  * 注册
  */
 router.post('/register', async(req, res) => {
+    let _user = req.body;
+    let { username, password, telphone } = _user;
+    if (!username || !password || !telphone) {
+        res.json({ code: -1, data: null, message: '参数有误' });
+    }
+    try {
+        const data = await db(`select * from tour_user where username=${username}`);
+        if (data.length !== 0) {
+            res.json({ code: 200, data: [], errorMsg: '该用户已注册,请直接登录', success: false });
+        } else {
+            const interinfo = await db(`insert into tour_user (id,username,password,telphone) VALUES (0,${username},${password},${telphone})`);
+            res.json({ code: 200, errorMsg: '注册成功', success: true });
+        }
+    } catch (e) {
+        res.json({ code: 0, data: [], errorMsg: '获取数据失败', success: false });
+    }
+});
+
+/**
+ * 注册
+ */
+router.post('/list', async(req, res) => {
     let _user = req.body;
     let { username, password, telphone } = _user;
     if (!username || !password || !telphone) {
