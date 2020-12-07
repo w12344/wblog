@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-27 16:49:49
- * @LastEditTime: 2020-12-02 11:27:59
+ * @LastEditTime: 2020-12-07 11:00:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\server\index.js
@@ -24,6 +24,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/tour/banner', require(__dirname + '/module/banner'));
 app.use('/tour/menu', require(__dirname + '/module/menu'));
 app.use('/tour/user', require(__dirname + '/module/user'));
+app.use('/tour/article', require(__dirname + '/module/article'));
 
 
 app.listen(8091, () => {

@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-03 15:12:42
- * @LastEditTime: 2020-12-03 17:31:08
+ * @LastEditTime: 2020-12-07 11:15:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\admins\src\locales\zh-CN\menu.js
@@ -15,6 +15,9 @@ export default {
     'menu.permission': '用户中心',
     'menu.permission.user-list': '用户列表',
     'menu.permission.menu-list': '菜单列表',
+    'menu.article': '文章管理',
+    'menu.article.article-list': '文章列表',
+    'menu.article.article-add': '文章发表',
     'menu.login': '登录',
     'menu.register': '注册',
     'menu.register.result': '注册结果',

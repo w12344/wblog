@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-03 15:12:42
- * @LastEditTime: 2020-12-03 17:30:51
+ * @LastEditTime: 2020-12-07 18:02:59
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\admins\config\routes.js
@@ -9,9 +9,11 @@
 export default [{
         path: '/user',
         component: '../layouts/UserLayout',
-        routes: [
-            { path: '/user', redirect: '/user/login', },
-        ],
+        routes: [{
+            name: 'login',
+            path: '/user/login',
+            component: './user/login',
+        }],
     },
     {
         path: '/',
@@ -65,6 +67,26 @@ export default [{
                         ],
                     },
                     {
+                        path: "/article",
+                        name: "article",
+                        icon: 'profile',
+                        routes: [{
+                                path: '/article/list',
+                                name: 'article-list',
+                                icon: 'profile',
+                                component: './Article/list/index',
+                                authority: ['admin'],
+                            },
+                            {
+                                path: '/article/add',
+                                name: 'article-add',
+                                icon: 'profile',
+                                component: './Article/announce/index',
+                                authority: ['admin'],
+                            },
+                        ]
+                    },
+                    {
                         name: 'list.table-list',
                         icon: 'table',
                         path: '/list',
@@ -74,6 +96,10 @@ export default [{
                         component: './404',
                     },
                 ],
+            },
+            {
+                path: '/user/login',
+                component: './user/login',
             },
             {
                 component: './404',

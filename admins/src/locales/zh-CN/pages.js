@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-03 15:12:42
- * @LastEditTime: 2020-12-04 10:32:24
+ * @LastEditTime: 2020-12-07 11:37:31
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\admins\src\locales\zh-CN\pages.js
@@ -47,6 +47,10 @@ export default {
     'pages.searchTable.updateForm.ruleDesc.descPlaceholder': '请输入至少五个字符',
     'pages.searchTable.updateForm.ruleDesc.descRules': '请输入至少五个字符的规则描述！',
     'pages.searchTable.updateForm.ruleProps.title': '配置规则属性',
+
+    'pages.article.list.textName.nameLabel': '文章名称',
+    'pages.article.list.selectForm.ruleDesc.tag': '请选择文章分类',
+
     'pages.searchTable.updateForm.object': '监控对象',
     'pages.searchTable.updateForm.ruleProps.templateLabel': '规则模板',
     'pages.searchTable.updateForm.ruleProps.typeLabel': '规则类型',

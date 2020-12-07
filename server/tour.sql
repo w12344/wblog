@@ -63,7 +63,7 @@ CREATE TABLE `tour_menu` (
 
 
 DROP TABLE IF EXISTS `tour_blog_content`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET @saved_cs_client = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tour_blog_content` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -71,6 +71,7 @@ CREATE TABLE `tour_blog_content` (
   `img` int(1) NOT NULL DEFAULT 1,
   `user_id` int(10) NOT NULL DEFAULT 1,
   `collection_num` varchar(255) DEFAULT 0,
+  `title` varchar(255) DEFAULT NULL,
   `keywords` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=0 DEFAULT CHARSET=utf8;

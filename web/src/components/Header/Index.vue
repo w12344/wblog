@@ -1,7 +1,7 @@
 <!--
  * @Author: WZQ
  * @Date: 2020-11-19 14:56:29
- * @LastEditTime: 2020-12-02 17:54:30
+ * @LastEditTime: 2020-12-07 09:23:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\components\Header\Index.vue
@@ -169,6 +169,7 @@ export default class Header extends Vue {
   .el-input__inner {
     background-color: #f3f5f6;
     border: none;
+    height:36px;;
   }
 }
 

@@ -7,6 +7,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../helper/db');
+const jwt = require("jsonwebtoken")
 const multer = require('../helper/multer');
 // const { putFile } = require('../helper/qiniu-oss');
 
@@ -100,7 +101,7 @@ router.post('/login', async(req, res) => {
         if (!data.length) {
             res.json({ code: 200, data: [], errorMsg: '账号或密码错误', success: false });
         } else {
-            res.json({ code: 200, data: data[0], errorMsg: '登录成功', success: true });
+            res.json({ code: 200, data: data[0], token: jwt(data[0]), errorMsg: '登录成功', success: true });
         }
     } catch (e) {
         res.json({ code: 0, data: [], errorMsg: '获取数据失败', success: false });

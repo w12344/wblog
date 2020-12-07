@@ -11,7 +11,7 @@ import { Alert, Space, message, Tabs } from 'antd';
 import React, { useState } from 'react';
 import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
 import { connect, useIntl, FormattedMessage } from 'umi';
-import { getFakeCaptcha } from '@/services/login';
+import { fakeAccountLogin } from '@/services/login';
 import styles from './index.less';
 
 const LoginMessage = ({ content }) => (
@@ -31,14 +31,23 @@ const Login = (props) => {
   const [type, setType] = useState('account');
   const intl = useIntl();
 
-  const handleSubmit = (values) => {
-    const { dispatch } = props;
-    dispatch({
-      type: 'login/login',
-      payload: { ...values, type },
-    });
+  const handleSubmit = async (values) => {
+    await fakeAccountLogin(values).then((response) => {
+      const { code, data, errorMsg, success } = response.data;
+      if (success) {
+        message({ type: 'success', message: '登录成功', center: true });
+        this.loginAction(data);
+        setTimeout(() => {
+          this.$router.push('/');
+        }, 1000);
+      } else {
+        this.$message.error({ message: errorMsg, center: true });
+      }
+    })
+      .catch((error) => {
+        console.log(error);
+      });
   };
-
   return (
     <div className={styles.main}>
       <ProForm
@@ -184,13 +193,13 @@ const Login = (props) => {
               captchaTextRender={(timing, count) =>
                 timing
                   ? `${count} ${intl.formatMessage({
-                      id: 'pages.getCaptchaSecondText',
-                      defaultMessage: '获取验证码',
-                    })}`
+                    id: 'pages.getCaptchaSecondText',
+                    defaultMessage: '获取验证码',
+                  })}`
                   : intl.formatMessage({
-                      id: 'pages.login.phoneLogin.getVerificationCode',
-                      defaultMessage: '获取验证码',
-                    })
+                    id: 'pages.login.phoneLogin.getVerificationCode',
+                    defaultMessage: '获取验证码',
+                  })
               }
               name="captcha"
               rules={[
