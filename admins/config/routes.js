@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-12-03 15:12:42
- * @LastEditTime: 2020-12-07 18:02:59
+ * @LastEditTime: 2020-12-08 15:28:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\admins\config\routes.js
@@ -21,7 +21,7 @@ export default [{
         routes: [{
                 path: '/',
                 component: '../layouts/BasicLayout',
-                authority: ['admin', 'user'],
+                // authority: ['admin', 'user'],
                 routes: [{
                         path: '/',
                         redirect: '/welcome',
@@ -37,13 +37,13 @@ export default [{
                         name: 'admin',
                         icon: 'crown',
                         component: './Admin',
-                        authority: ['admin'],
+                        // authority: ['admin'],
                         routes: [{
                             path: '/admin/sub-page',
                             name: 'sub-page',
                             icon: 'smile',
                             component: './Welcome',
-                            authority: ['admin'],
+                            // authority: ['admin'],
                         }, ],
                     },
                     {
@@ -55,14 +55,14 @@ export default [{
                                 name: 'user-list',
                                 icon: 'user',
                                 component: './permission/list/index',
-                                authority: ['admin'],
+                                // authority: ['admin'],
                             },
                             {
                                 path: '/permission/menu',
                                 name: 'menu-list',
                                 icon: 'menu',
                                 component: './permission/menu/index',
-                                authority: ['admin'],
+                                // authority: ['admin'],
                             }
                         ],
                     },
@@ -75,14 +75,14 @@ export default [{
                                 name: 'article-list',
                                 icon: 'profile',
                                 component: './Article/list/index',
-                                authority: ['admin'],
+                                // authority: ['admin'],
                             },
                             {
                                 path: '/article/add',
                                 name: 'article-add',
                                 icon: 'profile',
                                 component: './Article/announce/index',
-                                authority: ['admin'],
+                                // authority: ['admin'],
                             },
                         ]
                     },

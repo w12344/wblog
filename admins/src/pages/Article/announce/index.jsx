@@ -5,7 +5,7 @@ import { PageContainer } from '@ant-design/pro-layout';
 import { PlusOutlined, InboxOutlined } from '@ant-design/icons';
 import styles from './index.less';
 import { getBase64 } from '../../../utils/utils'
-import { tagList } from '../../../const/index';
+import { tagList, classfilyList } from '../../../const/index';
 import { insetAricle } from '../service'
 const { Dragger } = Upload;
 const { Option } = Select;
@@ -164,8 +164,8 @@ const Announce = () => {
                                     </div>
                                 )}
                             >
-                                {items.map(item => (
-                                    <Option key={item}>{item}</Option>
+                                {classfilyList.map(item => (
+                                    <Option key={item.key}>{item.name}</Option>
                                 ))}
                             </Select>
                         )}

@@ -1,7 +1,7 @@
 <!--
  * @Author: WZQ
  * @Date: 2020-11-18 18:07:41
- * @LastEditTime: 2020-12-02 14:00:55
+ * @LastEditTime: 2020-12-08 10:05:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\components\HelloWorld.vue
@@ -81,8 +81,8 @@ export default class Register extends Vue {
   };
   //注册验证规则
   private rules: any = {
-    password: [{ validator: validatePass('请输入密码'), trigger: 'blur' }],
-    checkPass: [{ validator: validateCheckPass('请输入确认密码', this.ruleForm), trigger: 'blur' }],
+    password: [{ validator: validatePass('请输入5-20位的密码'), trigger: 'blur' }],
+    checkPass: [{ validator: validateCheckPass('请输入5-20位的确认密码', this.ruleForm), trigger: 'blur' }],
     telphone: [{ validator: checkPhone('请输入手机号'), trigger: 'blur' }],
     username: [{ validator: validateUsername('请输入4到16位包含字母数字或者下划线的用户名'), trigger: 'blur' }],
   };

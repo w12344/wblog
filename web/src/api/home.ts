@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-27 17:32:27
- * @LastEditTime: 2020-12-02 11:20:04
+ * @LastEditTime: 2020-12-08 16:54:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\api\home.ts
@@ -18,29 +18,37 @@ export const getBannerData = (): AxiosPromise<ResponseData> => {
 };
 
 //获取菜单数据
-export const getMenuData = (): AxiosPromise<ResponseData> => {
+export const getMenuData = (data: any): AxiosPromise<ResponseData> => {
   return httpRequest.request({
     method: 'get',
     url: '/tour/menu/list',
+    params: data,
   });
 };
 
 //注册接口
-export const registerSend = (data:any): AxiosPromise<ResponseData> => {
+export const registerSend = (data: any): AxiosPromise<ResponseData> => {
   return httpRequest.request({
     method: 'post',
     url: '/tour/user/register',
-    data
+    data,
   });
 };
 
 //登录接口
-export const login = (data:any): AxiosPromise<ResponseData> => {
+export const login = (data: any): AxiosPromise<ResponseData> => {
   return httpRequest.request({
     method: 'post',
     url: '/tour/user/login',
-    data
+    data,
   });
 };
 
-
+//最新文章模块
+export const newArticleList = (data: any): AxiosPromise<ResponseData> => {
+  return httpRequest.request({
+    method: 'get',
+    url: '/tour/article/list',
+    params: data,
+  });
+};

@@ -1,7 +1,7 @@
 <!--
  * @Author: WZQ
  * @Date: 2020-11-19 14:56:29
- * @LastEditTime: 2020-12-07 09:23:29
+ * @LastEditTime: 2020-12-08 10:10:49
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\components\Header\Index.vue
@@ -106,8 +106,7 @@ export default class Header extends Vue {
   }
 
   private async getMenuData() {
-    await getMenuData()
-      .then((response: any) => {
+    await getMenuData({ current: 1, pageSize: 10 }).then((response: any) => {
         const { code, data, errorMsg } = response.data;
         if (code === 200) {
           this.menuList = data;
@@ -169,7 +168,7 @@ export default class Header extends Vue {
   .el-input__inner {
     background-color: #f3f5f6;
     border: none;
-    height:36px;;
+    height: 36px;
   }
 }
 

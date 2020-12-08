@@ -1,14 +1,14 @@
 <!--
  * @Author: your name
  * @Date: 2020-11-24 17:46:44
- * @LastEditTime: 2020-11-24 18:48:09
+ * @LastEditTime: 2020-12-08 17:33:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\components\Article\Index.vue
 -->
 <template>
   <div class="site-container row">
-    <article class="post-list contt blockimg" id="post_10" v-for="item in 10" :key="item">
+    <article class="post-list contt blockimg" id="post_10">
       <div class="entry-container">
         <div class="block-image feaimg">
           <a
@@ -25,10 +25,12 @@
         </div>
         <header class="entry-header">
           <span class="entry-title"
-            ><a href="https://qicao.cn/mingyan/10.html"><span class="badge arc_v6">置顶</span>本博发帖已启用先审后发机制,请勿灌水,谢谢合作</a></span
+            ><a href="https://qicao.cn/mingyan/10.html"><span class="badge arc_v6">置顶</span>{{ articleItem.title }}</a></span
           >
         </header>
-        <div class="entry-summary ss"><p>为配合上级有关部门要求，净化网络风气，打造绿色健康网络平台，本博发帖采用先审后发机制，支持原创，支持积极正能量，请大家严格遵守本博规定！</p></div>
+        <div class="entry-summary ss">
+          <p>{{ articleItem.content }}</p>
+        </div>
         <div class="entry-meta">
           <a href="https://qicao.cn/author/1"
             ><img
@@ -37,26 +39,27 @@
               class="avatar avatar-140 photo"
               height="25"
               width="25"
-            />admin</a
-          ><span class="separator">/</span><a href="https://qicao.cn/category/mingyan/">名言</a><span class="separator">/</span><time datetime="2020-10-02">52天前</time>
-          <span class="separator">/</span> 281 阅读
+            />{{ articleItem.user_name }}</a
+          ><span class="separator">/</span><a href="https://qicao.cn/category/mingyan/">{{ articleItem.classify }}</a
+          ><span class="separator">/</span><time datetime="2020-10-02">{{ timerLeave }}</time> <span class="separator">/</span> 281 阅读
         </div>
       </div>
     </article>
   </div>
 </template>
-  <script>
-export default {
-  data() {
-    return {
-      bannerList: [
-        { key: '', src: require('../../assets/images/home/banner1.jpg') },
-        { key: '', src: require('../../assets/images/home/banner1.jpg') },
-        { key: '', src: require('../../assets/images/home/banner1.jpg') },
-      ],
-    };
-  },
-};
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import { ArticleItemData } from '../../const/home';
+import { getDateDiff } from '../../utils/utils';
+
+@Component
+export default class ArticleItem extends Vue {
+  @Prop({}) articleItem!: ArticleItemData; //文章详情
+
+  get timerLeave() {
+    return getDateDiff(this.articleItem.gmtCreate);
+  }
+}
 </script>
 <style scoped lang="scss">
 .site-container {
@@ -139,27 +142,29 @@ export default {
         text-align: left;
         text-indent: 25px;
         p {
-          padding: 0 0 15px;
-          display: -webkit-box;
-          -webkit-box-orient: vertical;
-          -webkit-line-clamp: 2;
-          text-overflow: ellipsis;
+          max-height: 65px;
           overflow: hidden;
           font-size: 13px;
           color: #999;
           line-height: 23px;
           margin: 7px 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          display: -webkit-box;
+          -webkit-line-clamp: 3;
+          -webkit-box-orient: vertical;
         }
       }
       .entry-meta {
         text-align: left;
         margin-bottom: 0px !important;
         font-size: 11px;
+        margin-top:14px;
         color: #939393;
         letter-spacing: 2px;
         line-height: 1;
-        a{
-          color:#939393;
+        a {
+          color: #939393;
         }
         .avatar {
           margin-right: 5px;

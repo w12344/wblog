@@ -11,7 +11,7 @@ import { Alert, Space, message, Tabs } from 'antd';
 import React, { useState } from 'react';
 import ProForm, { ProFormCaptcha, ProFormCheckbox, ProFormText } from '@ant-design/pro-form';
 import { connect, useIntl, FormattedMessage } from 'umi';
-import { fakeAccountLogin } from '@/services/login';
+import { getFakeCaptcha } from '@/services/login';
 import styles from './index.less';
 
 const LoginMessage = ({ content }) => (
@@ -31,22 +31,12 @@ const Login = (props) => {
   const [type, setType] = useState('account');
   const intl = useIntl();
 
-  const handleSubmit = async (values) => {
-    await fakeAccountLogin(values).then((response) => {
-      const { code, data, errorMsg, success } = response.data;
-      if (success) {
-        message({ type: 'success', message: '登录成功', center: true });
-        this.loginAction(data);
-        setTimeout(() => {
-          this.$router.push('/');
-        }, 1000);
-      } else {
-        this.$message.error({ message: errorMsg, center: true });
-      }
-    })
-      .catch((error) => {
-        console.log(error);
-      });
+  const handleSubmit = (values) => {
+    const { dispatch } = props;
+    dispatch({
+      type: 'login/login',
+      payload: { ...values },
+    });
   };
   return (
     <div className={styles.main}>
@@ -96,7 +86,7 @@ const Login = (props) => {
         {type === 'account' && (
           <>
             <ProFormText
-              name="userName"
+              name="username"
               fieldProps={{
                 size: 'large',
                 prefix: <UserOutlined className={styles.prefixIcon} />,

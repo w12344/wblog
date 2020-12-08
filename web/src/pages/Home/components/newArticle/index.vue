@@ -1,7 +1,7 @@
 <!--
  * @Author: wuzhiqiang
  * @Date: 2020-11-19 14:56:29
- * @LastEditTime: 2020-11-24 18:01:54
+ * @LastEditTime: 2020-12-08 17:01:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\components\Header\Index.vue
@@ -18,20 +18,43 @@
         </div>
       </nav>
     </header>
-    <ArticleItem></ArticleItem>
+    <div v-for="(articleItem, articleIndex) in articleList" :key="articleIndex">
+      <ArticleItem :articleItem="articleItem"></ArticleItem>
+    </div>
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue';
 import Component from 'vue-class-component';
-import ArticleItem from "../../../../components/ArticleItem/Index.vue"
-
+import ArticleItem from '../../../../components/ArticleItem/Index.vue';
+import { newArticleList } from '../../../../api/home';
 @Component({
   components: {
-    ArticleItem
+    ArticleItem,
   },
 })
-export default class newArticle extends Vue {}
+export default class newArticle extends Vue {
+  private articleList: any = [];
+
+  mounted() {
+    this.newArticleList();
+  }
+
+  private async newArticleList() {
+    await newArticleList({ current: 1, pageSize: 10 })
+      .then((response: any) => {
+        const { code, data, errorMsg, success } = response.data;
+        if (success) {
+          this.articleList = data;
+        } else {
+          console.log(errorMsg);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+}
 </script>
 <style scoped lang="scss">
 .article-box {

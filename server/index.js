@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-11-27 16:49:49
- * @LastEditTime: 2020-12-07 11:00:45
+ * @LastEditTime: 2020-12-08 16:20:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\server\index.js
@@ -9,6 +9,7 @@
 const express = require('express');
 const app = express();
 const bodyParser = require('body-parser');
+const verify = require('./utils/verify')
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -20,6 +21,18 @@ app.use((req, res, next) => {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+// app.all("*", (req, res, next) => {
+//     let token = req.headers.token;
+//     let userinfo = verify.getToken(token);
+//     if (!userinfo && req.path != '/tour/user/login') {
+//         return res.json({
+//             code: 1,
+//             msg: 'token无效'
+//         })
+//     }
+//     next()
+// })
 
 app.use('/tour/banner', require(__dirname + '/module/banner'));
 app.use('/tour/menu', require(__dirname + '/module/menu'));

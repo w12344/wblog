@@ -7,9 +7,7 @@
 const express = require('express');
 const router = express.Router();
 const db = require('../helper/db');
-const jwt = require("jsonwebtoken")
-const multer = require('../helper/multer');
-// const { putFile } = require('../helper/qiniu-oss');
+const verify = require('../utils/verify')
 
 
 //获取用会列表
@@ -61,7 +59,7 @@ router.post('/register', async(req, res) => {
             res.json({ code: 200, errorMsg: '注册成功', success: true });
         }
     } catch (e) {
-        res.json({ code: 0, data: [], errorMsg: '获取数据失败', success: false });
+        res.json({ code: 0, data: [], errorMsg: '获取数据失败', errorData: e, success: false });
     }
 });
 
@@ -75,7 +73,7 @@ router.post('/list', async(req, res) => {
         res.json({ code: -1, data: null, message: '参数有误' });
     }
     try {
-        const data = await db(`select * from tour_user where username=${username}`);
+        const data = await db(`select * from tour_user where username='${username}'`);
         if (data.length !== 0) {
             res.json({ code: 200, data: [], errorMsg: '该用户已注册,请直接登录', success: false });
         } else {
@@ -97,14 +95,38 @@ router.post('/login', async(req, res) => {
         res.json({ code: -1, data: null, message: '参数有误' });
     }
     try {
-        const data = await db(`select * from tour_user where username =${username} and password=${password}`);
+        const data = await db(`select * from tour_user where username='${username}' and password='${password}'`);
         if (!data.length) {
             res.json({ code: 200, data: [], errorMsg: '账号或密码错误', success: false });
         } else {
-            res.json({ code: 200, data: data[0], token: jwt(data[0]), errorMsg: '登录成功', success: true });
+            let token = verify.setToken(data[0]);
+            res.json({
+                code: 200,
+                data: {...data[0], token },
+                errorMsg: '登录成功',
+                success: true
+            });
         }
     } catch (e) {
-        res.json({ code: 0, data: [], errorMsg: '获取数据失败', success: false });
+        res.json({ code: 500, data: [], errorMsg: '获取数据失败', errorData: e, success: false });
+    }
+});
+
+
+/**
+ * 获取个人信息
+ */
+router.get('/currentUser', (req, res) => {
+    let token = req.headers.token;
+    try {
+        let data = verify.getToken(token);
+        if (data) {
+            res.json({ code: 200, data, success: true });
+        } else {
+            res.json({ code: 500, data: [], errorMsg: '获取数据失败', success: false });
+        }
+    } catch (e) {
+        res.json({ code: 500, data: [], errorMsg: '获取数据失败', errorData: e, success: false });
     }
 });
 
