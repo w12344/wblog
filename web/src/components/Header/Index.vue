@@ -1,7 +1,7 @@
 <!--
  * @Author: WZQ
  * @Date: 2020-11-19 14:56:29
- * @LastEditTime: 2020-12-08 10:10:49
+ * @LastEditTime: 2020-12-09 16:45:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \wBlog\src\components\Header\Index.vue
@@ -98,13 +98,14 @@ export default class Header extends Vue {
   ];
 
   private get username() {
-    return this.userinfo.username ? this.userinfo.username : '登录';
+    return this.userinfo ? this.userinfo.username : '登录';
   }
 
   created() {
     this.getMenuData();
   }
 
+  //获取菜单列表
   private async getMenuData() {
     await getMenuData({ current: 1, pageSize: 10 }).then((response: any) => {
         const { code, data, errorMsg } = response.data;
@@ -135,10 +136,11 @@ export default class Header extends Vue {
   }
 
   private handleNavItemChange = (navItem: NavListItem) => {
-    if (navItem.path === '/login' && this.userinfo) {
+    if (navItem.path === '/login' && this.username) {
       return;
+    } else {
+      this.$router.push(navItem.path);
     }
-    this.$router.push(navItem.path);
   };
   private handleSelect = (key: number, keyPath: string) => {
     console.log(key, keyPath);

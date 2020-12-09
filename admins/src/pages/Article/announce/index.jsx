@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Form, Input, Select, Divider, Button, Row, Col, Upload, message } from 'antd';
 import useForm from 'rc-form-hooks';
 import { PageContainer } from '@ant-design/pro-layout';
 import { PlusOutlined, InboxOutlined } from '@ant-design/icons';
 import styles from './index.less';
+import 'braft-editor/dist/index.css'
+import BraftEditor from 'braft-editor'
 import { getBase64 } from '../../../utils/utils'
 import { tagList, classfilyList } from '../../../const/index';
 import { insetAricle } from '../service'
@@ -23,9 +25,11 @@ const formItemLayout = {
 const buttonItemLayout = {
     wrapperCol: { span: 21, offset: 3 },
 }
+
+
 const Announce = () => {
     let index = 0;
-    const { getFieldDecorator, validateFields, resetFields } = useForm();
+    const { getFieldDecorator, validateFields, resetFields, setFieldsValue } = useForm();
     const [items, setItems] = useState(tagList);
     const [imgUrl, setImgUrl] = useState("");
     const [name, setName] = useState('')
@@ -56,22 +60,6 @@ const Announce = () => {
         },
     };
 
-
-    const handleSubmitChange = (e) => {
-        e.preventDefault();
-        validateFields().then(values => {
-            const { img } = values;
-            if (img) {
-                getBase64(img.file.originFileObj, imgUrl => {
-                    setImgUrl(imgUrl);
-                })
-            }
-            submitInfo({ ...values, img: imgUrl ? imgUrl : "" })
-        }).catch(errorInfo => {
-            message.error(errorInfo.message)
-        });
-    }
-
     const submitInfo = async (data) => {
         try {
             let dataInfo = await insetAricle(data);
@@ -88,7 +76,27 @@ const Announce = () => {
         }
     }
 
+    const handleSubmitChange = (e) => {
+        e.preventDefault();
+        validateFields().then(values => {
+            const { img, content } = values;
+            if (img) {
+                getBase64(img.file.originFileObj, imgUrl => {
+                    setImgUrl(imgUrl);
+                })
+            }
+            submitInfo({ ...values, img: imgUrl ? imgUrl : "", content: (content.toRAW().blocks)[0].text })
+        }).catch(errorInfo => {
+            message.error(errorInfo.message)
+        });
+    }
 
+    useEffect(() => {
+        setFieldsValue({
+            content: BraftEditor.createEditorState('<p>Hello <b>World!</b></p>')
+        })
+    }, []);
+    const controls = ['bold', 'italic', 'underline', 'text-color', 'separator', 'link', 'separator', 'media']
     return (
         <PageContainer>
             <Card className={styles.container}>
@@ -111,10 +119,23 @@ const Announce = () => {
                     </Form.Item>
                     <Form.Item label='文章内容' {...formItemLayout}>
                         {getFieldDecorator('content', {
-                            rules: [{ required: true, message: '请输入文章内容' }],
-                            initialValue: '',
+                            validateTrigger: 'onBlur',
+                            rules: [{
+                                required: true,
+                                validator: (_, value, callback) => {
+                                    if (value.isEmpty()) {
+                                        callback('请输入正文内容')
+                                    } else {
+                                        callback()
+                                    }
+                                }
+                            }],
                         })(
-                            <Input.TextArea rows={8} placeholder="请输入文章内容" label="文章内容" />
+                            <BraftEditor
+                                className={styles.my_editor}
+                                controls={controls}
+                                placeholder="请输入正文内容"
+                            />
                         )}
                     </Form.Item>
                     <Form.Item label='文章标签' {...formItemLayout}>

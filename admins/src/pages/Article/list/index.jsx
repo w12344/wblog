@@ -1,74 +1,15 @@
 import { PlusOutlined } from '@ant-design/icons';
-import { Button, Divider, message, Input, Drawer } from 'antd';
+import { Button, Tooltip, message, Drawer, Tag, Popconfirm } from 'antd';
 import React, { useState, useRef } from 'react';
-import { useIntl, FormattedMessage } from 'umi';
+import { useIntl, FormattedMessage, history } from 'umi';
 import { PageContainer, FooterToolbar } from '@ant-design/pro-layout';
 import ProTable from '@ant-design/pro-table';
 import ProDescriptions from '@ant-design/pro-descriptions';
 import { queryRule } from './service'
-/**
- * 添加节点
- * @param fields
- */
+import styles from './index.less'
+import { classfilyList } from '@/const/index'
+import moment from 'moment';
 
-const handleAdd = async (fields) => {
-  const hide = message.loading('正在添加');
-  try {
-    await addRule({ ...fields });
-    hide();
-    message.success('添加成功');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('添加失败请重试！');
-    return false;
-  }
-};
-
-/**
- * 更新节点
- * @param fields
- */
-
-const handleUpdate = async (fields) => {
-  const hide = message.loading('正在配置');
-  try {
-    await updateRule({
-      name: fields.name,
-      desc: fields.desc,
-      key: fields.key,
-    });
-    hide();
-    message.success('配置成功');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('配置失败请重试！');
-    return false;
-  }
-};
-/**
- *  删除节点
- * @param selectedRows
- */
-
-const handleRemove = async (selectedRows) => {
-  const hide = message.loading('正在删除');
-  if (!selectedRows) return true;
-
-  try {
-    await removeRule({
-      key: selectedRows.map((row) => row.key),
-    });
-    hide();
-    message.success('删除成功，即将刷新');
-    return true;
-  } catch (error) {
-    hide();
-    message.error('删除失败，请重试');
-    return false;
-  }
-};
 
 const TableList = () => {
   const [createModalVisible, handleModalVisible] = useState(false);
@@ -88,6 +29,8 @@ const TableList = () => {
       ),
       dataIndex: 'title',
       tip: '文章名称是唯一的 key',
+      width: 200,
+      fixed: 'left',
       formItemProps: {
         rules: [
           {
@@ -99,41 +42,80 @@ const TableList = () => {
         ],
       },
       render: (dom, entity) => {
-        return <a onClick={() => setRow(entity)}>{dom}</a>;
+        return <Tooltip title={dom}>
+          <a onClick={() => setRow(entity)}>{dom}</a>
+        </Tooltip>
+
       },
     },
     {
       title: "文章内容",
       dataIndex: 'content',
-      valueType: 'textarea',
+      width: 500,
+      render: (content) => {
+        return <div className={styles.table_content}><span>{content}</span></div>
+      }
     },
     {
       title: "文章图片",
+      width: 150,
       dataIndex: 'img',
     },
     {
       title: "文章标签",
+      width: 100,
       dataIndex: 'tag',
+      render: (tag) => {
+        return <Tag color="magenta">{tag}</Tag>
+      }
     },
     {
-      title: "被收藏数量",
+      title: "被收藏量",
+      width: 200,
       dataIndex: 'collection_num',
     },
     {
       title: "所属模块",
+      width: 150,
       dataIndex: 'classify',
+      render: (classify) => {
+        let items = classify && classfilyList.find(item => item.key === classify);
+        return <span>{items.name}</span>
+      }
     },
     {
       title: "创建时间",
+      width: 200,
       dataIndex: 'gmtCreate',
+      render: (gmtCreate) => {
+        return <span>{moment(gmtCreate).format('YYYY-MM-DD hh:mm:ss')}</span>
+      }
     },
     {
       title: "最后修改时间",
+      width: 200,
       dataIndex: 'gmtModified',
+      render: (_, row) => {
+        return <span>{row.gmtModified ? moment(row.gmtModified).format('YYYY-MM-DD hh:mm:ss') : ""}</span>
+      }
     },
     {
       title: "作者",
+      width: 100,
       dataIndex: 'user_name',
+    },
+    {
+      title: '操作',
+      width: 200,
+      fixed: 'right',
+      valueType: 'option',
+      render: (text, record, _, action) => [
+        <a key="editable" onClick={() => { action.startEditable?.(record.id) }}> 编辑 </a>,
+        <Popconfirm title='确认删除吗?' onConfirm={() => confirm(record.id)} okText="是" cancelText="否">
+          <a href={record.url} target="_blank" rel="noopener noreferrer" key="view"> 删除 </a>
+        </Popconfirm>,
+        <a href={record.url} target="_blank" rel="noopener noreferrer" key="view"> 查看 </a>,
+      ]
     },
   ];
   return (
@@ -145,11 +127,11 @@ const TableList = () => {
         })}
         actionRef={actionRef}
         rowKey="key"
-        search={{
-          labelWidth: 120,
-        }}
+        scroll={{ x: 1300 }}
         toolBarRender={() => [
-          <Button type="primary" onClick={() => handleModalVisible(true)}>
+          <Button type="primary" onClick={() => {
+            history.push({ pathname: '/article/add' })
+          }}>
             <PlusOutlined /> <FormattedMessage id="pages.searchTable.new" defaultMessage="新建" />
           </Button>,
         ]}
@@ -159,67 +141,26 @@ const TableList = () => {
           onChange: (_, selectedRows) => setSelectedRows(selectedRows),
         }}
       />
-      {selectedRowsState?.length > 0 && (
-        <FooterToolbar
-          extra={
-            <div>
-              <FormattedMessage id="pages.searchTable.chosen" defaultMessage="已选择" />{' '}
-              <a
-                style={{
-                  fontWeight: 600,
-                }}
-              >
-                {selectedRowsState.length}
-              </a>{' '}
-              <FormattedMessage id="pages.searchTable.item" defaultMessage="项" />
-              &nbsp;&nbsp;
-              <span>
-                <FormattedMessage
-                  id="pages.searchTable.totalServiceCalls"
-                  defaultMessage="服务调用次数总计"
-                />{' '}
-                {selectedRowsState.reduce((pre, item) => pre + item.callNo, 0)}{' '}
-                <FormattedMessage id="pages.searchTable.tenThousand" defaultMessage="万" />
-              </span>
-            </div>
-          }
-        >
-          <Button
-            onClick={async () => {
-              await handleRemove(selectedRowsState);
-              setSelectedRows([]);
-              actionRef.current?.reloadAndRest?.();
-            }}
-          >
-            <FormattedMessage id="pages.searchTable.batchDeletion" defaultMessage="批量删除" />
-          </Button>
-          <Button type="primary">
-            <FormattedMessage id="pages.searchTable.batchApproval" defaultMessage="批量审批" />
-          </Button>
-        </FooterToolbar>
-      )}
-      <Drawer
-        width={600}
-        visible={!!row}
-        onClose={() => {
-          setRow(undefined);
-        }}
-        closable={false}
-      >
-        {row?.name && (
-          <ProDescriptions
-            column={2}
-            title={row?.name}
-            request={async () => ({
-              data: row || {},
-            })}
-            params={{
-              id: row?.name,
-            }}
-            columns={columns}
-          />
-        )}
-      </Drawer>
+      {stepFormValues && Object.keys(stepFormValues).length ? (
+        <UpdateForm
+          onSubmit={async (value) => {
+            const success = await handleUpdate(value);
+            if (success) {
+              handleUpdateModalVisible(false);
+              setStepFormValues({});
+              if (actionRef.current) {
+                actionRef.current.reload();
+              }
+            }
+          }}
+          onCancel={() => {
+            handleUpdateModalVisible(false);
+            setStepFormValues({});
+          }}
+          updateModalVisible={updateModalVisible}
+          values={stepFormValues}
+        />
+      ) : null}
     </PageContainer>
   );
 };
